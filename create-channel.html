@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إنشاء قناة - بثوث احترافي</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" />
+  <meta name="theme-color" content="#1b1e36" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <style>
+    .create-channel-container {
+      min-height: 100vh;
+      padding: 2rem 0;
+    }
+
+    .create-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .create-header span {
+      color: #8b9bf5;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    .create-header h1 {
+      font-size: 2.5rem;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .create-header p {
+      color: #b9d1ff;
+      max-width: 50rem;
+      margin: 0 auto;
+    }
+
+    .form-layout {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .form-card {
+      background: rgba(16, 24, 44, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 2rem;
+    }
+
+    .form-section {
+      margin-bottom: 2rem;
+    }
+
+    .form-section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: #eef2ff;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+      color: #d2d8ff;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #eef2ff;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: rgba(111, 91, 255, 0.5);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #8b9bf5;
+    }
+
+    .avatar-upload {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .avatar-preview {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at top, #6f5bff 0%, #28c7ff 100%);
+      display: grid;
+      place-items: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #070b16;
+    }
+
+    .upload-btn-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .upload-btn-wrapper input[type=file] {
+      position: absolute;
+      left: -9999px;
+    }
+
+    .upload-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem 1.5rem;
+      border: 1px dashed rgba(111, 91, 255, 0.5);
+      border-radius: 12px;
+      background: rgba(111, 91, 255, 0.1);
+      color: #6f5bff;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .upload-label:hover {
+      background: rgba(111, 91, 255, 0.2);
+      border-color: rgba(111, 91, 255, 0.8);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .checkbox-group label {
+      margin: 0;
+      color: #b9d1ff;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .info-box {
+      background: rgba(111, 91, 255, 0.1);
+      border: 1px solid rgba(111, 91, 255, 0.2);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      color: #d2d8ff;
+      font-size: 0.9rem;
+    }
+
+    .info-box strong {
+      color: #6f5bff;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .form-actions button {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .form-actions button:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #6f5bff, #28c7ff);
+      color: #070b16;
+    }
+
+    .btn-cancel {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d2d8ff;
+    }
+
+    .preview-section {
+      background: rgba(16, 24, 44, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .preview-title {
+      font-size: 1.3rem;
+      color: #eef2ff;
+      margin-bottom: 1rem;
+    }
+
+    .preview-card {
+      background: rgba(16, 24, 44, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .preview-cover {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(135deg, rgba(111, 91, 255, 0.2), rgba(40, 199, 255, 0.15));
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
+
+    .preview-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle at top, #6f5bff 0%, #28c7ff 100%);
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #070b16;
+      border: 3px solid rgba(16, 24, 44, 0.95);
+    }
+
+    .preview-body {
+      padding: 1.5rem;
+    }
+
+    .preview-body h3 {
+      margin: 0 0 0.4rem;
+    }
+
+    .preview-body p {
+      color: #b9d1ff;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    @media (max-width: 900px) {
+      .form-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">B</div>
+        <div>
+          <h1>بثوث احترافي</h1>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="channels.html">القنوات</a>
+        <a href="broadcast.html">بث مباشر</a>
+        <a href="group-broadcast.html">بث المجموعات</a>
+        <a href="login.html">دخول</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="create-channel-container">
+    <div class="container">
+      <div class="create-header">
+        <span>إنشاء قناة جديدة</span>
+        <h1>ابدأ بثك الآن</h1>
+        <p>أنشئ قناة احترافية وابدأ البث المباشر للجمهور من جميع أنحاء العالم</p>
+      </div>
+
+      <div class="form-layout">
+        <!-- نموذج الإنشاء -->
+        <div class="form-card">
+          <form id="channelForm">
+            <!-- معلومات القناة -->
+            <div class="form-section">
+              <h2>معلومات القناة</h2>
+
+              <div class="form-group">
+                <label for="channelName">اسم القناة *</label>
+                <input type="text" id="channelName" placeholder="مثال: قناتي الخاصة" required />
+              </div>
+
+              <div class="form-group">
+                <label for="username">اسم المستخدم (Username) *</label>
+                <input type="text" id="username" placeholder="اسمك بدون مسافات" required />
+              </div>
+
+              <div class="form-group">
+                <label for="description">وصف القناة</label>
+                <textarea id="description" placeholder="اكتب وصفًا قصيرًا عن قناتك ومحتواك..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="category">فئة المحتوى *</label>
+                <select id="category" required>
+                  <option value="">اختر الفئة</option>
+                  <option value="games">الألعاب</option>
+                  <option value="sports">الرياضة</option>
+                  <option value="education">التعليم</option>
+                  <option value="entertainment">الترفيه</option>
+                  <option value="tech">التقنية</option>
+                  <option value="music">الموسيقى</option>
+                  <option value="news">الأخبار</option>
+                  <option value="other">أخرى</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- معلومات شخصية -->
+            <div class="form-section">
+              <h2>المعلومات الشخصية</h2>
+
+              <div class="form-group">
+                <label for="email">البريد الإلكتروني *</label>
+                <input type="email" id="email" placeholder="your@email.com" required />
+              </div>
+
+              <div class="form-group">
+                <label for="phone">رقم الهاتف</label>
+                <input type="tel" id="phone" placeholder="+966 50 123 4567" />
+              </div>
+
+              <div class="form-group">
+                <label for="country">الدولة</label>
+                <select id="country">
+                  <option value="">اختر الدولة</option>
+                  <option value="sa">المملكة العربية السعودية</option>
+                  <option value="ae">الإمارات العربية المتحدة</option>
+                  <option value="eg">مصر</option>
+                  <option value="jo">الأردن</option>
+                  <option value="other">أخرى</option>
+                </select>
+              </div>
+
+              <div class="info-box">
+                <strong>ملاحظة:</strong> بيانات الاتصال خاصة وآمنة ولن تُعرض على الملأ.
+              </div>
+            </div>
+
+            <!-- شروط وأحكام -->
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input type="checkbox" id="terms" required />
+                <label for="terms">أوافق على شروط وأحكام المنصة</label>
+              </div>
+            </div>
+
+            <!-- الأزرار -->
+            <div class="form-actions">
+              <button type="submit" class="btn-submit">إنشاء القناة</button>
+              <button type="reset" class="btn-cancel">إلغاء</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- معاينة القناة -->
+        <div class="preview-section">
+          <div class="preview-title">معاينة قناتك</div>
+          
+          <div class="preview-card">
+            <div class="preview-cover">
+              <div class="preview-avatar" id="previewAvatar">أ</div>
+            </div>
+            <div class="preview-body">
+              <h3 id="previewName">اسم القناة</h3>
+              <p id="previewCategory">فئة المحتوى</p>
+            </div>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1rem; color: #b9d1ff;">
+            <strong style="color: #eef2ff;">اسم المستخدم:</strong>
+            <p id="previewUsername" style="margin: 0.5rem 0 0; color: #8b9bf5;">@اسمك</p>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1rem; color: #b9d1ff;">
+            <strong style="color: #eef2ff;">الوصف:</strong>
+            <p id="previewDescription" style="margin: 0.5rem 0 0; color: #8b9bf5;">وصف القناة سيظهر هنا</p>
+          </div>
+
+          <div style="background: rgba(111, 91, 255, 0.1); border: 1px solid rgba(111, 91, 255, 0.2); border-radius: 12px; padding: 1rem; color: #d2d8ff; font-size: 0.9rem;">
+            <strong style="color: #6f5bff;">✓ قناتك جاهزة للبث المباشر</strong>
+            <p style="margin: 0.5rem 0 0;">بعد إنشاء القناة، ستتمكن من البدء ببث مباشر فوري وإدارة محتواك وجمهورك.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 بثوث احترافي. جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="channels.html">القنوات</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('channelForm');
+    const channelNameInput = document.getElementById('channelName');
+    const usernameInput = document.getElementById('username');
+    const descriptionInput = document.getElementById('description');
+    const categorySelect = document.getElementById('category');
+    
+    const previewName = document.getElementById('previewName');
+    const previewUsername = document.getElementById('previewUsername');
+    const previewDescription = document.getElementById('previewDescription');
+    const previewCategory = document.getElementById('previewCategory');
+    const previewAvatar = document.getElementById('previewAvatar');
+
+    // تحديث المعاينة عند الكتابة
+    channelNameInput.addEventListener('input', function () {
+      previewName.textContent = this.value || 'اسم القناة';
+      const firstChar = this.value.charAt(0) || 'أ';
+      previewAvatar.textContent = firstChar.toUpperCase();
+    });
+
+    usernameInput.addEventListener('input', function () {
+      previewUsername.textContent = '@' + (this.value || 'اسمك');
+    });
+
+    descriptionInput.addEventListener('input', function () {
+      previewDescription.textContent = this.value || 'وصف القناة سيظهر هنا';
+    });
+
+    categorySelect.addEventListener('change', function () {
+      const categories = {
+        'games': 'الألعاب',
+        'sports': 'الرياضة',
+        'education': 'التعليم',
+        'entertainment': 'الترفيه',
+        'tech': 'التقنية',
+        'music': 'الموسيقى',
+        'news': 'الأخبار',
+        'other': 'أخرى'
+      };
+      previewCategory.textContent = categories[this.value] || 'فئة المحتوى';
+    });
+
+    // معالجة إرسال النموذج
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const channelName = channelNameInput.value;
+      alert(`تم إنشاء القناة "${channelName}" بنجاح! 🎉\n\nقناتك الآن جاهزة للبث المباشر.`);
+      window.location.href = 'channels.html';
+    });
+  </script>
+  <script src="pwa.js"></script>
+</body>
+</html>

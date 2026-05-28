@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة الإدارة - بثوث احترافي</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" />
+  <meta name="theme-color" content="#1b1e36" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">B</div>
+        <div>
+          <h1>لوحة الإدارة</h1>
+          <p>تحكم كامل بمحتوى البث والقنوات والمستخدمين.</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="channels.html">القنوات</a>
+        <a href="create-channel.html">إنشاء قناة</a>
+        <a href="broadcast.html">بث مباشر</a>
+        <a href="group-broadcast.html">بث المجموعات</a>
+        <a href="#" id="logoutBtn">خروج</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="admin-main container">
+    <section class="admin-top">
+      <div class="admin-title">
+        <span>مرحبًا بك في لوحة التحكم</span>
+        <h2>أداة إدارة الموقع</h2>
+      </div>
+      <div class="breadcrumbs">
+        <span>الرئيسية</span>
+        <span>لوحة الإدارة</span>
+      </div>
+    </section>
+
+    <section class="admin-grid">
+      <aside class="admin-sidebar">
+        <div class="admin-card">
+          <h3>الإحصائيات السريعة</h3>
+          <ul>
+            <li><strong>8.3K</strong> مشاهدين حالياً</li>
+            <li><strong>12</strong> بث مباشر</li>
+            <li><strong>24</strong> قناة نشطة</li>
+            <li><strong>1.2K</strong> مستخدم جديد هذا الأسبوع</li>
+          </ul>
+        </div>
+        <div class="admin-card">
+          <h3>عمليات سريعة</h3>
+          <div class="quick-actions">
+            <button>إنشاء قناة جديدة</button>
+            <button>عرض التنبيهات</button>
+            <button>مراجعة البثوث</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="admin-dashboard">
+        <div class="status-cards">
+          <article>
+            <span>إجمالي المشاهدين</span>
+            <strong>184K</strong>
+          </article>
+          <article>
+            <span>البثوث المباشرة</span>
+            <strong>12</strong>
+          </article>
+          <article>
+            <span>القنوات</span>
+            <strong>24</strong>
+          </article>
+          <article>
+            <span>طلبات جديدة</span>
+            <strong>7</strong>
+          </article>
+        </div>
+
+        <div class="admin-panel">
+          <div class="panel-heading">
+            <h3>طلبات الموافقة على البثوث</h3>
+            <button>تحديث</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>القناة</th>
+                <th>المذيع</th>
+                <th>الفئة</th>
+                <th>الحالة</th>
+                <th>إجراءات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>عمر</td>
+                <td>على</td>
+                <td>ألعاب</td>
+                <td class="status live">مباشر</td>
+                <td><button>اعتماد</button><button class="btn-secondary">رفض</button></td>
+              </tr>
+              <tr>
+                <td>نور</td>
+                <td>نور</td>
+                <td>تعليم</td>
+                <td class="status upcoming">قريبًا</td>
+                <td><button>اعتماد</button><button class="btn-secondary">رفض</button></td>
+              </tr>
+              <tr>
+                <td>مروان</td>
+                <td>مروان</td>
+                <td>تقنية</td>
+                <td class="status pending">في الانتظار</td>
+                <td><button>اعتماد</button><button class="btn-secondary">رفض</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="admin-panel">
+          <div class="panel-heading">
+            <h3>أحدث المستخدمين</h3>
+          </div>
+          <div class="user-list">
+            <div>
+              <strong>ندى</strong>
+              <span>مشترك جديد</span>
+            </div>
+            <div>
+              <strong>سلمان</strong>
+              <span>بدأ بثًا جديدًا</span>
+            </div>
+            <div>
+              <strong>ريم</strong>
+              <span>طلبت قناة</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 بثوث احترافي. جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="channels.html">القنوات</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const isAdmin = localStorage.getItem('adminAuth') === 'true';
+    if (!isAdmin) {
+      alert('يجب تسجيل الدخول كمسؤول للوصول إلى لوحة الإدارة');
+      window.location.href = 'login.html';
+    }
+
+    function logoutAdmin() {
+      localStorage.removeItem('adminAuth');
+      localStorage.removeItem('rememberAdmin');
+      localStorage.removeItem('userAuth');
+      localStorage.removeItem('rememberUser');
+      window.location.href = 'login.html';
+    }
+  </script>
+  <script src="pwa.js"></script>
+</body>
+</html>

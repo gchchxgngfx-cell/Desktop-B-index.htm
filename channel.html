@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>قناة أحمد - بثوث احترافي</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" />
+  <meta name="theme-color" content="#1b1e36" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <style>
+    .channel-header {
+      background: linear-gradient(135deg, rgba(111, 91, 255, 0.2), rgba(40, 199, 255, 0.15));
+      padding: 2rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .channel-info {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .channel-banner {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle at top, #6f5bff 0%, #28c7ff 100%);
+      display: grid;
+      place-items: center;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #070b16;
+      box-shadow: 0 10px 30px rgba(111, 91, 255, 0.3);
+    }
+
+    .channel-details h1 {
+      margin: 0 0 0.5rem;
+      font-size: 2rem;
+    }
+
+    .channel-details p {
+      color: #b9d1ff;
+      margin: 0.5rem 0;
+    }
+
+    .channel-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-item strong {
+      font-size: 1.3rem;
+    }
+
+    .stat-item span {
+      color: #8b9bf5;
+      font-size: 0.9rem;
+    }
+
+    .channel-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 2rem;
+    }
+
+    .tab-btn {
+      padding: 1rem 0;
+      background: none;
+      border: none;
+      color: #b9d1ff;
+      cursor: pointer;
+      font-weight: 600;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .tab-btn.active {
+      color: #eef2ff;
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #6f5bff, #28c7ff);
+    }
+
+    .tab-btn:hover {
+      color: #d2d8ff;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 2rem 0;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .stream-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+    .stream-card {
+      background: rgba(16, 24, 44, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .stream-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(111, 91, 255, 0.4);
+    }
+
+    .stream-thumbnail {
+      width: 100%;
+      height: 170px;
+      background: linear-gradient(180deg, rgba(35, 58, 223, 0.18), rgba(15, 23, 42, 0.75));
+      display: grid;
+      place-items: center;
+      color: #d3e1ff;
+    }
+
+    .stream-info {
+      padding: 1rem;
+    }
+
+    .stream-info h3 {
+      margin: 0 0 0.5rem;
+    }
+
+    .stream-meta {
+      display: flex;
+      justify-content: space-between;
+      color: #8b9bf5;
+      font-size: 0.9rem;
+    }
+
+    .about-section {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">B</div>
+        <div>
+          <h1>بثوث احترافي</h1>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="channels.html">القنوات</a>
+        <a href="broadcast.html">بث مباشر</a>
+        <a href="group-broadcast.html">بث المجموعات</a>
+        <a href="login.html">دخول</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="channel-header">
+      <div class="container channel-info">
+        <div class="channel-banner">أ</div>
+        <div class="channel-details">
+          <h1>أحمد</h1>
+          <p>مذيع الألعاب والمحتوى الترفيهي</p>
+          <p>متخصص في بث الألعاب الحية والتعليقات الحية على الأحداث الرياضية</p>
+          <div class="channel-stats">
+            <div class="stat-item">
+              <strong>45.2K</strong>
+              <span>متابع</span>
+            </div>
+            <div class="stat-item">
+              <strong>324</strong>
+              <span>بث مباشر</span>
+            </div>
+            <div class="stat-item">
+              <strong>2.1M</strong>
+              <span>مشاهدات</span>
+            </div>
+          </div>
+          <div class="channel-actions">
+            <a class="btn btn-primary" href="#">متابعة</a>
+            <a class="btn btn-secondary" href="#">إخطار</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'streams')">البثوث المباشرة</button>
+        <button class="tab-btn" onclick="switchTab(event, 'past')">البثوث السابقة</button>
+        <button class="tab-btn" onclick="switchTab(event, 'about')">عن القناة</button>
+      </div>
+
+      <div id="streams" class="tab-content active">
+        <div class="stream-grid">
+          <div class="stream-card">
+            <div class="stream-thumbnail">
+              <span>مباشر الآن</span>
+            </div>
+            <div class="stream-info">
+              <h3>بث لعبة Valorant</h3>
+              <div class="stream-meta">
+                <span>منذ ساعتين</span>
+                <span>8.3K مشاهد</span>
+              </div>
+            </div>
+          </div>
+          <div class="stream-card">
+            <div class="stream-thumbnail">
+              <span>مجدول قريباً</span>
+            </div>
+            <div class="stream-info">
+              <h3>دوري كرة القدم</h3>
+              <div class="stream-meta">
+                <span>الجمعة 9 مساءً</span>
+                <span>2.1K متابع</span>
+              </div>
+            </div>
+          </div>
+          <div class="stream-card">
+            <div class="stream-thumbnail">
+              <span>مجدول قريباً</span>
+            </div>
+            <div class="stream-info">
+              <h3>تحديات الألعاب مع الأصدقاء</h3>
+              <div class="stream-meta">
+                <span>السبت 8 مساءً</span>
+                <span>5.2K متابع</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="past" class="tab-content">
+        <div class="stream-grid">
+          <div class="stream-card">
+            <div class="stream-thumbnail">
+              <span>مسجل</span>
+            </div>
+            <div class="stream-info">
+              <h3>بث الأمس - الألعاب الحية</h3>
+              <div class="stream-meta">
+                <span>قبل يوم</span>
+                <span>12.5K مشاهدة</span>
+              </div>
+            </div>
+          </div>
+          <div class="stream-card">
+            <div class="stream-thumbnail">
+              <span>مسجل</span>
+            </div>
+            <div class="stream-info">
+              <h3>حلقة الأسبوع الماضي</h3>
+              <div class="stream-meta">
+                <span>قبل 7 أيام</span>
+                <span>18.3K مشاهدة</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="about" class="tab-content">
+        <div class="about-section">
+          <h2>عن أحمد</h2>
+          <p>أحمد مذيع محترف متخصص في البث المباشر للألعاب والأحداث الرياضية. بدأ مساره في عالم البث قبل 5 سنوات وحقق انجازات كبيرة في المنطقة.</p>
+          <p><strong>تخصصات البث:</strong> الألعاب، الرياضة، الترفيه، والحوارات</p>
+          <p><strong>أفضل أوقات البث:</strong> الجمعة والسبت والأحد، من 7 مساءً إلى منتصف الليل</p>
+          <p><strong>الدعم:</strong> يمكنك دعم القناة من خلال الاشتراك أو الهدايا المباشرة أثناء البث.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 بثوث احترافي. جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="channels.html">القنوات</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function switchTab(event, tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.tab-btn');
+      
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+  <script src="pwa.js"></script>
+</body>
+</html>

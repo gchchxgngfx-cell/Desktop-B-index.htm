@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تسجيل دخول - بثوث احترافي</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" />
+  <meta name="theme-color" content="#1b1e36" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <style>
+    .login-container {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(16, 24, 44, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 2.5rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+    }
+
+    .login-card h1 {
+      text-align: center;
+      margin: 0 0 0.5rem;
+    }
+
+    .login-card p {
+      text-align: center;
+      color: #b9d1ff;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+      color: #d2d8ff;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #eef2ff;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: rgba(111, 91, 255, 0.5);
+    }
+
+    .form-group input::placeholder {
+      color: #8b9bf5;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .checkbox-group label {
+      margin: 0;
+      color: #b9d1ff;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #6f5bff, #28c7ff);
+      border: none;
+      border-radius: 12px;
+      color: #070b16;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #b9d1ff;
+    }
+
+    .signup-link a {
+      color: #6f5bff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .divider {
+      text-align: center;
+      color: #8b9bf5;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 0;
+      left: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .divider span {
+      background: rgba(16, 24, 44, 0.95);
+      padding: 0 0.8rem;
+      position: relative;
+    }
+
+    .social-login {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .social-btn {
+      padding: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #eef2ff;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+      font-weight: 600;
+    }
+
+    .social-btn:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="logo" style="margin: 0 auto 1.5rem; width: fit-content;">B</div>
+      <h1>مرحبا بك</h1>
+      <p>دخول إلى حسابك على بثوث احترافي</p>
+
+      <form>
+        <div class="form-group">
+          <label for="email">البريد الإلكتروني</label>
+          <input type="email" id="email" placeholder="example@email.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">كلمة المرور</label>
+          <input type="password" id="password" placeholder="••••••••" required />
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="remember" />
+          <label for="remember">تذكرني</label>
+        </div>
+
+        <button type="submit" class="login-btn">دخول</button>
+      </form>
+
+      <div class="divider">
+        <span>أو</span>
+      </div>
+
+      <div class="social-login">
+        <button class="social-btn">Google</button>
+        <button class="social-btn">Apple</button>
+      </div>
+
+      <div class="signup-link">
+        ليس لديك حساب؟ <a href="#signup">إنشاء حساب</a>
+      </div>
+
+      <div class="signup-link" style="margin-top: 1rem; font-size: 0.9rem;">
+        <a href="index.html" style="color: #8b9bf5;">العودة للصفحة الرئيسية</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const remember = document.getElementById('remember').checked;
+
+      if (email === 'admin@stream.com' && password === 'admin123') {
+        localStorage.setItem('adminAuth', 'true');
+        if (remember) localStorage.setItem('rememberAdmin', 'true');
+        window.location.href = 'admin.html';
+        return;
+      }
+
+      if (email && password) {
+        localStorage.setItem('userAuth', 'true');
+        if (remember) localStorage.setItem('rememberUser', 'true');
+        window.location.href = 'index.html';
+        return;
+      }
+
+      alert('الرجاء إدخال بيانات صحيحة لتسجيل الدخول');
+    });
+  </script>
+  <script src="pwa.js"></script>
+</body>
+</html>

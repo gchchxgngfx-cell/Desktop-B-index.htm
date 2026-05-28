@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بث المجموعات - بثوث احترافي</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" />
+  <meta name="theme-color" content="#1b1e36" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <style>
+    .group-page {
+      padding: 3rem 0;
+    }
+
+    .group-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .group-card,
+    .group-sidebar {
+      background: rgba(16, 24, 44, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 1.5rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
+    }
+
+    .group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .group-header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+    }
+
+    .group-tabs {
+      display: inline-flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .group-tab {
+      padding: 0.9rem 1.2rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #eef2ff;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .group-tab.active {
+      background: linear-gradient(135deg, #6f5bff, #28c7ff);
+      color: #070b16;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+      color: #d2d8ff;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #eef2ff;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: rgba(111, 91, 255, 0.5);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .file-preview {
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      color: #8b9bf5;
+      text-align: center;
+    }
+
+    .file-preview img,
+    .file-preview audio {
+      width: 100%;
+      display: block;
+      background: #000;
+    }
+
+    .submit-button {
+      padding: 1rem 1.4rem;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #6f5bff, #28c7ff);
+      color: #070b16;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .group-list {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .group-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 1.2rem;
+    }
+
+    .group-item h3 {
+      margin: 0 0 0.5rem;
+    }
+
+    .group-item p {
+      margin: 0.35rem 0;
+      color: #c7d2ff;
+    }
+
+    .group-item .tag {
+      display: inline-flex;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(111, 91, 255, 0.18);
+      color: #d2d8ff;
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    .group-sidebar h2 {
+      margin-top: 0;
+    }
+
+    .group-sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .group-sidebar li {
+      padding: 1rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #eef2ff;
+    }
+
+    .group-sidebar li strong {
+      display: block;
+      margin-bottom: 0.45rem;
+    }
+
+    @media (max-width: 900px) {
+      .group-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">B</div>
+        <div>
+          <h1>بث المجموعات الخاصة</h1>
+          <p>إنشاء بثوص صوتية أو صور خاصة للمجموعات مع ميزة المنافسة.</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="channels.html">القنوات</a>
+        <a href="broadcast.html">بث مباشر</a>
+        <a href="admin.html">لوحة الإدارة</a>
+        <a href="login.html">دخول</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="group-page container">
+    <div class="group-grid">
+      <section class="group-card">
+        <div class="group-header">
+          <div>
+            <h1>بث مجموعة خاص</h1>
+            <p>اختَر نوع البث: صوتي أو صور، وانشئ منافسة خاصة للفريق.</p>
+          </div>
+          <div class="group-tabs">
+            <div class="group-tab active" data-mode="voice">بث صوتي</div>
+            <div class="group-tab" data-mode="image">بث صور</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="groupName">اسم المجموعة</label>
+          <input type="text" id="groupName" placeholder="مثال: فريق الذكاء الاصطناعي" />
+        </div>
+
+        <div class="form-group">
+          <label for="groupDesc">وصف المجموعة</label>
+          <textarea id="groupDesc" placeholder="ما هو موضوع البث الخاص بالمجموعة؟"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="challengeMode">ميزة المنافسة</label>
+          <select id="challengeMode">
+            <option value="none">بدون منافسة</option>
+            <option value="battle">تحدي مباشر</option>
+            <option value="challenge">منافسة محتوى</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label id="fileLabel" for="groupFile">تحميل ملف صوتي</label>
+          <input type="file" id="groupFile" accept="audio/*" />
+        </div>
+
+        <div class="file-preview" id="filePreview">
+          اختر ملف صوتي أو صورة لعرضه هنا.
+        </div>
+
+        <button class="submit-button" id="createGroupBtn">إنشاء بث المجموعة</button>
+
+        <div class="group-list" id="groupList"></div>
+      </section>
+
+      <aside class="group-sidebar">
+        <h2>كيف تعمل الميزة</h2>
+        <ul>
+          <li><strong>اختر نوع البث</strong> صوتي أو صور لمشاركة محتوى خاص بالمجموعة.</li>
+          <li><strong>حدد اسم ومحتوى</strong> لسهولة الإدارة والمراجعة.</li>
+          <li><strong>ميزة المنافسة</strong> تضيف طابع التحدي بين المجموعات.</li>
+          <li><strong>البث خاص</strong> يتم عرضه مع علامة مجموعة خاصة فقط.</li>
+        </ul>
+
+        <h2>أفكار للتحدي</h2>
+        <ul>
+          <li><strong>صوتي:</strong> تحدي الأغاني أو القصص القصيرة.</li>
+          <li><strong>صور:</strong> تحدي التصوير الإبداعي أو الستايل.</li>
+          <li><strong>منافسة:</strong> اختر أفضل محتوى بناءً على تصويت أو تقييم.</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 بثوث احترافي. جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="channels.html">القنوات</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const tabs = document.querySelectorAll('.group-tab');
+    const fileInput = document.getElementById('groupFile');
+    const fileLabel = document.getElementById('fileLabel');
+    const filePreview = document.getElementById('filePreview');
+    const createGroupBtn = document.getElementById('createGroupBtn');
+    const groupList = document.getElementById('groupList');
+
+    let currentMode = 'voice';
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentMode = tab.dataset.mode;
+        fileInput.accept = currentMode === 'voice' ? 'audio/*' : 'image/*';
+        fileLabel.textContent = currentMode === 'voice' ? 'تحميل ملف صوتي' : 'تحميل صورة';
+        filePreview.innerHTML = 'اختر ملف صوتي أو صورة لعرضه هنا.';
+      });
+    });
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (!file) {
+        filePreview.innerHTML = 'اختر ملف صوتي أو صورة لعرضه هنا.';
+        return;
+      }
+      const url = URL.createObjectURL(file);
+      if (currentMode === 'voice') {
+        filePreview.innerHTML = `<audio controls src="${url}"></audio>`;
+      } else {
+        filePreview.innerHTML = `<img src="${url}" alt="معاينة الصورة" />`;
+      }
+    });
+
+    function addGroupItem({ name, desc, mode, challenge, fileName }) {
+      const item = document.createElement('div');
+      item.className = 'group-item';
+      item.innerHTML = `
+        <h3>${name}</h3>
+        <p>${desc}</p>
+        <p><strong>نوع البث:</strong> ${mode === 'voice' ? 'صوتي' : 'صور'}</p>
+        <p><strong>منافسة:</strong> ${challenge === 'none' ? 'بدون' : challenge === 'battle' ? 'تحدي مباشر' : 'منافسة محتوى'}</p>
+        <p><strong>الملف:</strong> ${fileName || 'لم يتم اختيار ملف'}</p>
+        <span class="tag">مجموعة خاصة</span>
+      `;
+      groupList.prepend(item);
+    }
+
+    createGroupBtn.addEventListener('click', () => {
+      const name = document.getElementById('groupName').value.trim();
+      const desc = document.getElementById('groupDesc').value.trim();
+      const challenge = document.getElementById('challengeMode').value;
+      const file = fileInput.files[0];
+
+      if (!name || !desc || !file) {
+        alert('يرجى تعبئة اسم المجموعة والوصف واختيار ملف.');
+        return;
+      }
+
+      addGroupItem({ name, desc, mode: currentMode, challenge, fileName: file.name });
+      alert('تم إنشاء بث المجموعة الخاصة بنجاح!');
+      document.getElementById('groupName').value = '';
+      document.getElementById('groupDesc').value = '';
+      fileInput.value = '';
+      filePreview.innerHTML = 'اختر ملف صوتي أو صورة لعرضه هنا.';
+    });
+  </script>
+  <script src="pwa.js"></script>
+</body>
+</html>

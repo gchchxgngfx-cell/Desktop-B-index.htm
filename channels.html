@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>القنوات - بثوث احترافي</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" />
+  <meta name="theme-color" content="#1b1e36" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <style>
+    .channels-header {
+      text-align: center;
+      padding: 2rem 0;
+      background: linear-gradient(135deg, rgba(111, 91, 255, 0.1), rgba(40, 199, 255, 0.08));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .search-filter {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      padding: 0.9rem 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #eef2ff;
+    }
+
+    .search-box::placeholder {
+      color: #8b9bf5;
+    }
+
+    .filter-btn {
+      padding: 0.9rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #d2d8ff;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: rgba(111, 91, 255, 0.5);
+      background: rgba(111, 91, 255, 0.1);
+    }
+
+    .channels-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .channel-card {
+      background: rgba(16, 24, 44, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .channel-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(111, 91, 255, 0.3);
+      box-shadow: 0 20px 60px rgba(111, 91, 255, 0.15);
+    }
+
+    .channel-cover {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(135deg, rgba(111, 91, 255, 0.2), rgba(40, 199, 255, 0.15));
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+      position: relative;
+    }
+
+    .channel-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle at top, #6f5bff 0%, #28c7ff 100%);
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #070b16;
+      border: 3px solid rgba(16, 24, 44, 0.95);
+    }
+
+    .live-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ef4444;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .channel-body {
+      padding: 1.5rem;
+    }
+
+    .channel-body h3 {
+      margin: 0 0 0.4rem;
+    }
+
+    .channel-body p {
+      color: #b9d1ff;
+      font-size: 0.9rem;
+      margin: 0.5rem 0;
+    }
+
+    .channel-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .followers {
+      color: #8b9bf5;
+      font-size: 0.85rem;
+    }
+
+    .view-btn {
+      background: rgba(111, 91, 255, 0.2);
+      color: #6f5bff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .view-btn:hover {
+      background: rgba(111, 91, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">B</div>
+        <div>
+          <h1>بثوث احترافي</h1>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="broadcast.html">بث مباشر</a>
+        <a href="group-broadcast.html">بث المجموعات</a>
+        <a href="login.html">دخول</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="channels-header">
+      <div class="container">
+        <h2 style="margin: 0; font-size: 2rem;">القنوات</h2>
+        <p style="color: #b9d1ff; margin-top: 0.5rem;">تابع أفضل المذيعين والقنوات</p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="search-filter">
+        <input type="text" class="search-box" placeholder="ابحث عن قناة..." />
+        <button class="filter-btn active">الكل</button>
+        <button class="filter-btn">مباشر الآن</button>
+        <button class="filter-btn">ألعاب</button>
+        <button class="filter-btn">رياضة</button>
+      </div>
+
+      <div class="channels-grid">
+        <div class="channel-card" onclick="window.location.href='channel.html'">
+          <div class="channel-cover">
+            <div class="live-badge">مباشر</div>
+            <div class="channel-avatar">أ</div>
+          </div>
+          <div class="channel-body">
+            <h3>أحمد</h3>
+            <p>مذيع الألعاب والمحتوى الترفيهي</p>
+            <div class="channel-footer">
+              <span class="followers">45.2K متابع</span>
+              <button class="view-btn">عرض</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="channel-card">
+          <div class="channel-cover">
+            <div class="channel-avatar">س</div>
+          </div>
+          <div class="channel-body">
+            <h3>سارة</h3>
+            <p>خبيرة تصميم البث وتنسيق المحتوى</p>
+            <div class="channel-footer">
+              <span class="followers">32.8K متابع</span>
+              <button class="view-btn">عرض</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="channel-card">
+          <div class="channel-cover">
+            <div class="live-badge" style="background: #3b82f6;">قريباً</div>
+            <div class="channel-avatar">م</div>
+          </div>
+          <div class="channel-body">
+            <h3>مروان</h3>
+            <p>مطور المنصة ودعم البث المباشر</p>
+            <div class="channel-footer">
+              <span class="followers">18.5K متابع</span>
+              <button class="view-btn">عرض</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="channel-card">
+          <div class="channel-cover">
+            <div class="live-badge">مباشر</div>
+            <div class="channel-avatar">ن</div>
+          </div>
+          <div class="channel-body">
+            <h3>نور</h3>
+            <p>محتوى تعليمي وورش عمل</p>
+            <div class="channel-footer">
+              <span class="followers">56.2K متابع</span>
+              <button class="view-btn">عرض</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="channel-card">
+          <div class="channel-cover">
+            <div class="channel-avatar">ل</div>
+          </div>
+          <div class="channel-body">
+            <h3>لمى</h3>
+            <p>تغطية أخبار وأحداث مباشرة</p>
+            <div class="channel-footer">
+              <span class="followers">71.3K متابع</span>
+              <button class="view-btn">عرض</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="channel-card">
+          <div class="channel-cover">
+            <div class="live-badge">مباشر</div>
+            <div class="channel-avatar">ع</div>
+          </div>
+          <div class="channel-body">
+            <h3>عمر</h3>
+            <p>بث الألعاب التنافسية والبطولات</p>
+            <div class="channel-footer">
+              <span class="followers">89.1K متابع</span>
+              <button class="view-btn">عرض</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 بثوث احترافي. جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="login.html">دخول</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+  <script src="pwa.js"></script>
+</body>
+</html>

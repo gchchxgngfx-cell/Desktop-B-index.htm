@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بث الكاميرا والميك - بثوث احترافي</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" />
+  <meta name="theme-color" content="#1b1e36" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <style>
+    .broadcast-page {
+      padding: 3rem 0;
+    }
+
+    .broadcast-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .broadcast-card {
+      background: rgba(16, 24, 44, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 1.5rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
+    }
+
+    .broadcast-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .broadcast-header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+    }
+
+    .broadcast-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .broadcast-controls button {
+      padding: 1rem 1.4rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      background: linear-gradient(135deg, #6f5bff, #28c7ff);
+      color: #070b16;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .broadcast-controls button.disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .broadcast-status {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .broadcast-status div {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 1rem 1.2rem;
+      min-width: 140px;
+    }
+
+    .broadcast-status strong {
+      display: block;
+      margin-bottom: 0.45rem;
+      color: #eef2ff;
+    }
+
+    .preview-card {
+      border-radius: 24px;
+      overflow: hidden;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .preview-card video,
+    .preview-card audio {
+      width: 100%;
+      display: block;
+      background: #000;
+    }
+
+    .audio-meter {
+      width: 100%;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 0.9rem;
+    }
+
+    .audio-meter-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #34d399, #10b981);
+      border-radius: 999px;
+      transition: width 0.1s ease;
+    }
+
+    .broadcast-info p {
+      color: #c7d2ff;
+      line-height: 1.8;
+    }
+
+    .sidebar-panel {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .sidebar-panel .panel-title {
+      margin: 0 0 1rem;
+      font-size: 1.2rem;
+      color: #eef2ff;
+    }
+
+    .sidebar-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .sidebar-panel li {
+      padding: 1rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #eef2ff;
+    }
+
+    .sidebar-panel li strong {
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    @media (max-width: 900px) {
+      .broadcast-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">B</div>
+        <div>
+          <h1>بث الكاميرا والمايك</h1>
+          <p>فتح الكاميرا والمايك والبث الصوتي مباشرة من المتصفح.</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="channels.html">القنوات</a>
+        <a href="group-broadcast.html">بث المجموعات</a>
+        <a href="create-channel.html">إنشاء قناة</a>
+        <a href="admin.html">لوحة الإدارة</a>
+        <a href="login.html">دخول</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="broadcast-page container">
+    <div class="broadcast-grid">
+      <section class="broadcast-card">
+        <div class="broadcast-header">
+          <div>
+            <h1>تحكم البث الصوتي والكاميرا</h1>
+            <p class="broadcast-info">ابدأ بثك المباشر مع معاينة الكاميرا وتشغيل المايك، ثم شارك البث الصوتي مع جمهورك.</p>
+          </div>
+          <div class="broadcast-status">
+            <div>
+              <strong>الكاميرا</strong>
+              <span id="cameraState">متوقفة</span>
+            </div>
+            <div>
+              <strong>الميك</strong>
+              <span id="micState">متوقف</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="broadcast-controls">
+          <button id="startBtn">فتح الكاميرا والمايك</button>
+          <button id="toggleCamBtn" class="disabled" disabled>إيقاف الكاميرا</button>
+          <button id="toggleMicBtn" class="disabled" disabled>إيقاف المايك</button>
+          <button id="stopBtn" class="disabled" disabled>إيقاف البث</button>
+        </div>
+
+        <div class="preview-card">
+          <video id="previewVideo" autoplay playsinline muted></video>
+        </div>
+
+        <div class="broadcast-info">
+          <p>هذا المثال يعرض فتح الكاميرا والميكروفون في المتصفح ويُظهر معاينة فيديو محليًا. لا يحتاج خادم بث حقيقي لعرض معاينة الكاميرا، ويمكن دمجه لاحقًا مع خوادم WebRTC أو RTMP.</p>
+          <div>
+            <strong>مستوى الصوت</strong>
+            <div class="audio-meter"><div class="audio-meter-fill" id="audioLevel"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar-panel">
+        <div>
+          <h2 class="panel-title">تعليمات سريعة</h2>
+          <ul>
+            <li><strong>1.</strong> اضغط على "فتح الكاميرا والمايك" للسماح بالتطبيق باستخدام الأجهزة.</li>
+            <li><strong>2.</strong> بعد التفعيل، ستعرض الكاميرا الفيديو مباشرة، ويمكنك إيقاف أو تشغيل الكاميرا والمايك.</li>
+            <li><strong>3.</strong> هذا نموذج محلي؛ استخدم WebRTC أو خادم بث لإرسال البث للجمهور.</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="panel-title">حالة البث</h2>
+          <ul>
+            <li><strong>بدء البث:</strong> فتح الأجهزة</li>
+            <li><strong>إيقاف البث:</strong> إغلاق الكاميرا والمايك</li>
+            <li><strong>البث الصوتي:</strong> يظهر في شريط مستوى الصوت</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 بثوث احترافي. جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="channels.html">القنوات</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const toggleCamBtn = document.getElementById('toggleCamBtn');
+    const toggleMicBtn = document.getElementById('toggleMicBtn');
+    const cameraState = document.getElementById('cameraState');
+    const micState = document.getElementById('micState');
+    const previewVideo = document.getElementById('previewVideo');
+    const audioLevel = document.getElementById('audioLevel');
+
+    let localStream = null;
+    let audioContext = null;
+    let analyser = null;
+    let microphoneSource = null;
+    let animationId = null;
+
+    async function startBroadcast() {
+      try {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        previewVideo.srcObject = localStream;
+        previewVideo.play();
+        cameraState.textContent = 'مفعلة';
+        micState.textContent = 'مفعّل';
+        toggleCamBtn.disabled = false;
+        toggleMicBtn.disabled = false;
+        stopBtn.disabled = false;
+        toggleCamBtn.classList.remove('disabled');
+        toggleMicBtn.classList.remove('disabled');
+        stopBtn.classList.remove('disabled');
+        startBtn.classList.add('disabled');
+        startBtn.disabled = true;
+        initAudioMeter();
+      } catch (error) {
+        alert('فشل في الوصول إلى الكاميرا أو الميكروفون. تأكد من السماح للأجهزة.');
+        console.error(error);
+      }
+    }
+
+    function stopBroadcast() {
+      if (!localStream) return;
+      localStream.getTracks().forEach(track => track.stop());
+      localStream = null;
+      previewVideo.srcObject = null;
+      cameraState.textContent = 'متوقفة';
+      micState.textContent = 'متوقف';
+      toggleCamBtn.disabled = true;
+      toggleMicBtn.disabled = true;
+      stopBtn.disabled = true;
+      toggleCamBtn.classList.add('disabled');
+      toggleMicBtn.classList.add('disabled');
+      stopBtn.classList.add('disabled');
+      startBtn.disabled = false;
+      startBtn.classList.remove('disabled');
+      audioLevel.style.width = '0%';
+      if (audioContext) {
+        audioContext.close();
+        audioContext = null;
+      }
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    }
+
+    function toggleCamera() {
+      if (!localStream) return;
+      const videoTrack = localStream.getVideoTracks()[0];
+      if (!videoTrack) return;
+      videoTrack.enabled = !videoTrack.enabled;
+      cameraState.textContent = videoTrack.enabled ? 'مفعلة' : 'متوقفة';
+      toggleCamBtn.textContent = videoTrack.enabled ? 'إيقاف الكاميرا' : 'تشغيل الكاميرا';
+    }
+
+    function toggleMic() {
+      if (!localStream) return;
+      const audioTrack = localStream.getAudioTracks()[0];
+      if (!audioTrack) return;
+      audioTrack.enabled = !audioTrack.enabled;
+      micState.textContent = audioTrack.enabled ? 'مفعّل' : 'متوقف';
+      toggleMicBtn.textContent = audioTrack.enabled ? 'إيقاف المايك' : 'تشغيل المايك';
+    }
+
+    function initAudioMeter() {
+      if (!localStream) return;
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioContext.createAnalyser();
+      microphoneSource = audioContext.createMediaStreamSource(localStream);
+      microphoneSource.connect(analyser);
+      analyser.fftSize = 256;
+      const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+      function updateMeter() {
+        analyser.getByteFrequencyData(dataArray);
+        const sum = dataArray.reduce((acc, value) => acc + value, 0);
+        const average = sum / dataArray.length;
+        const level = Math.min(100, Math.max(0, (average / 255) * 100));
+        audioLevel.style.width = `${level}%`;
+        animationId = requestAnimationFrame(updateMeter);
+      }
+
+      updateMeter();
+    }
+
+    startBtn.addEventListener('click', startBroadcast);
+    stopBtn.addEventListener('click', stopBroadcast);
+    toggleCamBtn.addEventListener('click', toggleCamera);
+    toggleMicBtn.addEventListener('click', toggleMic);
+  </script>
+  <script src="pwa.js"></script>
+</body>
+</html>

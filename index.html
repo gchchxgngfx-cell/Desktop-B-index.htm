@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>بثوث احترافي</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" />
+  <meta name="theme-color" content="#1b1e36" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">B</div>
+        <div>
+          <h1>بثوث احترافي</h1>
+          <p>منصة البث المباشر الأفضل للعروض والأحداث الحية</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#live">البث الآن</a>
+        <a href="channels.html">القنوات</a>
+        <a href="create-channel.html">إنشاء قناة</a>
+        <a href="broadcast.html">بث مباشر</a>
+        <a href="group-broadcast.html">بث المجموعات</a>
+        <a href="admin.html">لوحة الإدارة</a>
+        <a href="login.html">دخول</a>
+      </nav>
+      <button id="installBtn" class="btn btn-primary" style="display:none; margin-inline-start:1rem;">تثبيت التطبيق</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="kick-hero" id="live">
+      <div class="container kick-grid">
+        <div class="main-stream">
+          <div class="stream-card">
+            <div class="stream-card-header">
+              <div>
+                <span class="live-badge">مباشر الآن</span>
+                <h1>عرض الألعاب الحي مع أحمد</h1>
+                <p>انضم لمشاهدة أحداث الألعاب الحماسية والتعليقات الحية من الجمهور.</p>
+              </div>
+              <div class="stream-headline-stats">
+                <strong>8.3K</strong>
+                <span>مشاهد</span>
+              </div>
+            </div>
+
+            <div class="video-frame">
+              <video id="liveVideo" autoplay muted playsinline loop>
+                <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
+                متصفحك لا يدعم عرض الفيديو.
+              </video>
+            </div>
+
+            <div class="stream-card-footer">
+              <div class="stream-channel">
+                <div class="channel-avatar">أ</div>
+                <div>
+                  <h3>أحمد</h3>
+                  <p>بث ألعاب وتحديات مباشرة مع تفاعل الجمهور.</p>
+                </div>
+              </div>
+              <div class="action-buttons">
+                <a class="btn btn-primary" href="#">اشترك</a>
+                <a class="btn btn-secondary" href="#contact">تواصل</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-group">
+            <div class="panel">
+              <div class="panel-title">الجدول القادم</div>
+              <div class="panel-list">
+                <div class="panel-item">
+                  <span>مسابقات الألعاب</span>
+                  <small>الجمعة 9 مساءً</small>
+                </div>
+                <div class="panel-item">
+                  <span>حوار مباشر</span>
+                  <small>السبت 7 مساءً</small>
+                </div>
+                <div class="panel-item">
+                  <span>ورشة تقنية</span>
+                  <small>الأحد 5 مساءً</small>
+                </div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-title">القنوات المميزة</div>
+              <div class="panel-list">
+                <div class="panel-item">
+                  <span>سارة</span>
+                  <small>خبيرة البث والتصميم</small>
+                </div>
+                <div class="panel-item">
+                  <span>نور</span>
+                  <small>محتوى تعليمي مباشر</small>
+                </div>
+                <div class="panel-item">
+                  <span>عمر</span>
+                  <small>بطولات الألعاب</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="sidebar">
+          <div class="sidebar-card">
+            <div class="sidebar-header">
+              <h3>تابع الآن</h3>
+              <a href="channels.html">المزيد</a>
+            </div>
+            <ul class="channel-list">
+              <li>
+                <div class="channel-row"><span>أ</span><div><strong>أحمد</strong><small>مباشر الآن</small></div></div>
+                <span class="status live">8.3K</span>
+              </li>
+              <li>
+                <div class="channel-row"><span>س</span><div><strong>سارة</strong><small>مباشر الآن</small></div></div>
+                <span class="status live">5.7K</span>
+              </li>
+              <li>
+                <div class="channel-row"><span>ن</span><div><strong>نور</strong><small>قريبًا</small></div></div>
+                <span class="status upcoming">3.4K</span>
+              </li>
+              <li>
+                <div class="channel-row"><span>م</span><div><strong>مروان</strong><small>قريبًا</small></div></div>
+                <span class="status upcoming">2.9K</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-card">
+            <div class="sidebar-header">
+              <h3>الفئات</h3>
+            </div>
+            <div class="category-tags">
+              <button class="tag">ألعاب</button>
+              <button class="tag">رياضة</button>
+              <button class="tag">ترفيه</button>
+              <button class="tag">تعليمي</button>
+              <button class="tag">تقنية</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="schedule" id="schedule">
+      <div class="container section-header">
+        <span>الجدول القادم</span>
+        <h2>مواعيد البثوث القادمة</h2>
+      </div>
+      <div class="schedule-grid">
+        <div class="schedule-card">
+          <h4>مسابقات الألعاب</h4>
+          <p>الجمعة 9 مساءً</p>
+        </div>
+        <div class="schedule-card">
+          <h4>حوار مباشر</h4>
+          <p>السبت 7 مساءً</p>
+        </div>
+        <div class="schedule-card">
+          <h4>ورشة عمل تقنية</h4>
+          <p>الأحد 5 مساءً</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hosts container" id="hosts">
+      <div class="section-header">
+        <span>المقدّمون</span>
+        <h2>فريق البث المباشر</h2>
+      </div>
+      <div class="hosts-grid">
+        <article class="host-card" onclick="window.location.href='channel.html'" style="cursor: pointer;">
+          <div class="avatar">أ</div>
+          <h3>أحمد</h3>
+          <p>مذيع الألعاب و المحتوى الترفيهي.</p>
+        </article>
+        <article class="host-card" style="cursor: pointer;">
+          <div class="avatar">س</div>
+          <h3>سارة</h3>
+          <p>خبيرة تصميم البث وتنسيق المحتوى.</p>
+        </article>
+        <article class="host-card" style="cursor: pointer;">
+          <div class="avatar">م</div>
+          <h3>مروان</h3>
+          <p>مطور المنصة ودعم البث المباشر.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact container" id="contact">
+      <div class="contact-card">
+        <div>
+          <span>انضم الآن</span>
+          <h2>ابدأ بثك الاحترافي</h2>
+          <p>احجز بث مباشر، انشئ قناة، وتواصل مع جمهورك في لحظات.</p>
+        </div>
+        <a class="btn btn-primary" href="login.html">ابدأ الآن</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© 2026 بثوث احترافي. جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="channels.html">القنوات</a>
+        <a href="login.html">دخول</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="pwa.js"></script>
+</body>
+</html>
