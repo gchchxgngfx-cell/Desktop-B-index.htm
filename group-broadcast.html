@@ -223,23 +223,23 @@
       <section class="group-card">
         <div class="group-header">
           <div>
-            <h1>بث مجموعة خاص</h1>
-            <p>اختَر نوع البث: صوتي أو صور، وانشئ منافسة خاصة للفريق.</p>
+            <h1>بث غرفة خاصة</h1>
+            <p>اختر غرفة صوتية أو كاميرا وانطلق مباشرة من هاتفك أو جهازك.</p>
           </div>
           <div class="group-tabs">
-            <div class="group-tab active" data-mode="voice">بث صوتي</div>
-            <div class="group-tab" data-mode="image">بث صور</div>
+            <div class="group-tab active" data-mode="voice">غرفة صوتية</div>
+            <div class="group-tab" data-mode="camera">غرفة كاميرا</div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="groupName">اسم المجموعة</label>
+          <label for="groupName">اسم الغرفة</label>
           <input type="text" id="groupName" placeholder="مثال: فريق الذكاء الاصطناعي" />
         </div>
 
         <div class="form-group">
-          <label for="groupDesc">وصف المجموعة</label>
-          <textarea id="groupDesc" placeholder="ما هو موضوع البث الخاص بالمجموعة؟"></textarea>
+          <label for="groupDesc">وصف الغرفة</label>
+          <textarea id="groupDesc" placeholder="ما هو موضوع الغرفة الخاصة؟"></textarea>
         </div>
 
         <div class="form-group">
@@ -251,16 +251,17 @@
           </select>
         </div>
 
+        <div class="room-actions" style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem;">
+          <button class="submit-button" id="startRoomBtn">بدء الغرفة</button>
+          <button class="submit-button" id="stopRoomBtn" style="background:#ef4444; display:none;">إيقاف الغرفة</button>
+        </div>
+
         <div class="form-group">
-          <label id="fileLabel" for="groupFile">تحميل ملف صوتي</label>
-          <input type="file" id="groupFile" accept="audio/*" />
+          <label>معاينة الغرفة</label>
+          <div id="roomPreview" class="file-preview">سيظهر هنا الصوت أو الكاميرا عند البدء.</div>
         </div>
 
-        <div class="file-preview" id="filePreview">
-          اختر ملف صوتي أو صورة لعرضه هنا.
-        </div>
-
-        <button class="submit-button" id="createGroupBtn">إنشاء بث المجموعة</button>
+        <button class="submit-button" id="createGroupBtn">حفظ إعدادات الغرفة الخاصة</button>
 
         <div class="group-list" id="groupList"></div>
       </section>
@@ -296,70 +297,106 @@
 
   <script>
     const tabs = document.querySelectorAll('.group-tab');
-    const fileInput = document.getElementById('groupFile');
-    const fileLabel = document.getElementById('fileLabel');
-    const filePreview = document.getElementById('filePreview');
+    const startRoomBtn = document.getElementById('startRoomBtn');
+    const stopRoomBtn = document.getElementById('stopRoomBtn');
+    const roomPreview = document.getElementById('roomPreview');
     const createGroupBtn = document.getElementById('createGroupBtn');
     const groupList = document.getElementById('groupList');
 
     let currentMode = 'voice';
+    let stream = null;
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         currentMode = tab.dataset.mode;
-        fileInput.accept = currentMode === 'voice' ? 'audio/*' : 'image/*';
-        fileLabel.textContent = currentMode === 'voice' ? 'تحميل ملف صوتي' : 'تحميل صورة';
-        filePreview.innerHTML = 'اختر ملف صوتي أو صورة لعرضه هنا.';
+        startRoomBtn.textContent = currentMode === 'voice' ? 'بدء الغرفة الصوتية' : 'بدء غرفة الكاميرا';
       });
     });
 
-    fileInput.addEventListener('change', () => {
-      const file = fileInput.files[0];
-      if (!file) {
-        filePreview.innerHTML = 'اختر ملف صوتي أو صورة لعرضه هنا.';
-        return;
-      }
-      const url = URL.createObjectURL(file);
-      if (currentMode === 'voice') {
-        filePreview.innerHTML = `<audio controls src="${url}"></audio>`;
-      } else {
-        filePreview.innerHTML = `<img src="${url}" alt="معاينة الصورة" />`;
-      }
-    });
+    async function startRoom() {
+      if (stream) return;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia(
+          currentMode === 'voice' ? { audio: true } : { video: true, audio: true }
+        );
 
-    function addGroupItem({ name, desc, mode, challenge, fileName }) {
+        roomPreview.innerHTML = '';
+        if (currentMode === 'voice') {
+          const audio = document.createElement('audio');
+          audio.controls = true;
+          audio.autoplay = true;
+          audio.srcObject = stream;
+          roomPreview.appendChild(audio);
+          roomPreview.insertAdjacentHTML('beforeend', '<p style="margin-top:1rem; color:#8b9bf5;">الغرفة الصوتية تعمل الآن.</p>');
+        } else {
+          const video = document.createElement('video');
+          video.autoplay = true;
+          video.playsInline = true;
+          video.muted = true;
+          video.srcObject = stream;
+          video.style.width = '100%';
+          video.style.borderRadius = '18px';
+          roomPreview.appendChild(video);
+          roomPreview.insertAdjacentHTML('beforeend', '<p style="margin-top:1rem; color:#8b9bf5;">غرفة الكاميرا تعمل الآن. يمكنك إيقافها في أي وقت.</p>');
+        }
+
+        startRoomBtn.disabled = true;
+        stopRoomBtn.style.display = 'inline-flex';
+      } catch (error) {
+        alert('يرجى السماح باستخدام الميكروفون أو الكاميرا ثم المحاولة مرة أخرى.');
+        console.error(error);
+      }
+    }
+
+    function stopRoom() {
+      if (!stream) return;
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+      roomPreview.innerHTML = 'سيظهر هنا الصوت أو الكاميرا عند البدء.';
+      startRoomBtn.disabled = false;
+      stopRoomBtn.style.display = 'none';
+    }
+
+    function addGroupItem({ name, desc, mode, challenge, status }) {
       const item = document.createElement('div');
       item.className = 'group-item';
       item.innerHTML = `
         <h3>${name}</h3>
         <p>${desc}</p>
-        <p><strong>نوع البث:</strong> ${mode === 'voice' ? 'صوتي' : 'صور'}</p>
+        <p><strong>نوع الغرفة:</strong> ${mode === 'voice' ? 'صوتية' : 'كاميرا'}</p>
         <p><strong>منافسة:</strong> ${challenge === 'none' ? 'بدون' : challenge === 'battle' ? 'تحدي مباشر' : 'منافسة محتوى'}</p>
-        <p><strong>الملف:</strong> ${fileName || 'لم يتم اختيار ملف'}</p>
+        <p><strong>الحالة:</strong> ${status}</p>
         <span class="tag">مجموعة خاصة</span>
       `;
       groupList.prepend(item);
     }
 
+    startRoomBtn.addEventListener('click', startRoom);
+    stopRoomBtn.addEventListener('click', stopRoom);
+
     createGroupBtn.addEventListener('click', () => {
       const name = document.getElementById('groupName').value.trim();
       const desc = document.getElementById('groupDesc').value.trim();
       const challenge = document.getElementById('challengeMode').value;
-      const file = fileInput.files[0];
 
-      if (!name || !desc || !file) {
-        alert('يرجى تعبئة اسم المجموعة والوصف واختيار ملف.');
+      if (!name || !desc) {
+        alert('يرجى تعبئة اسم الغرفة والوصف.');
         return;
       }
 
-      addGroupItem({ name, desc, mode: currentMode, challenge, fileName: file.name });
-      alert('تم إنشاء بث المجموعة الخاصة بنجاح!');
+      addGroupItem({
+        name,
+        desc,
+        mode: currentMode,
+        challenge,
+        status: stream ? 'يعمل الآن' : 'جاري الإعداد'
+      });
+
+      alert('تم حفظ إعدادات الغرفة الخاصة بنجاح!');
       document.getElementById('groupName').value = '';
       document.getElementById('groupDesc').value = '';
-      fileInput.value = '';
-      filePreview.innerHTML = 'اختر ملف صوتي أو صورة لعرضه هنا.';
     });
   </script>
   <script src="pwa.js"></script>

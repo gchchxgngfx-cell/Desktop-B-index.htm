@@ -216,7 +216,8 @@
       const password = document.getElementById('password').value;
       const remember = document.getElementById('remember').checked;
 
-      if (email === 'admin@stream.com' && password === 'admin123') {
+      const adminEmail = 'apssac1286@outiook.sa';
+      if (email.toLowerCase() === adminEmail && password === 'admin123') {
         localStorage.setItem('adminAuth', 'true');
         if (remember) localStorage.setItem('rememberAdmin', 'true');
         window.location.href = 'admin.html';
